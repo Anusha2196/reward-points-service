@@ -1,0 +1,86 @@
+# Reward Points Service
+
+## Overview
+The Reward Points Service is a Spring Boot application that calculates reward points for customers based on their transactions. Customers earn points for every dollar spent over $50, with additional points for amounts over $100. The service provides endpoints to retrieve reward points for individual customers as well as all customers within a specified date range.
+
+## Project Structure
+The project is organized into the following packages:
+
+- **controller**: Contains the REST controllers that handle HTTP requests and responses.
+- **service**: Defines the service interfaces.
+- **serviceImpl**: Implements the service interfaces.
+- **dao**: Contains the repository interfaces for database access.
+- **model**: Defines the data models used in the application.
+
+## Implementation Details
+
+### RewardController
+The `RewardController` class provides endpoints to get reward points for a specific customer or all customers within a date range.
+
+- **Endpoints**:
+  - `GET /rewards/points/{customerId}`: Retrieves reward points for a specific customer within a date range.
+  - `GET /rewards/allcustomers`: Retrieves reward points for all customers within a date range.
+
+- **Methods**:
+  - `getRewardPoints`: Validates and adjusts the date range, calculates reward points for a specific customer, and returns the result.
+  - `calculateAllCustomersPoints`: Validates and adjusts the date range, calculates reward points for all customers, and returns the result.
+  - `validateAndAdjustDates`: Validates and adjusts the start and end dates to ensure they are within a 3-month range and that the start date is not after the end date.
+
+### RewardService
+The `RewardService` interface defines methods for calculating reward points.
+
+- **Methods**:
+  - `calculatePoints`: Calculates reward points based on the transaction amount.
+  - `calculateMonthlyPoints`: Calculates monthly and total reward points for a specific customer within a date range.
+  - `calculateAllCustomersPoints`: Calculates monthly and total reward points for all customers within a date range.
+
+### RewardServiceImpl
+The `RewardServiceImpl` class implements the `RewardService` interface.
+
+- **Methods**:
+  - `calculatePoints`: Calculates reward points based on the transaction amount. Customers receive 2 points for every dollar spent over $100 and 1 point for every dollar spent between $50 and $100.
+  - `calculateMonthlyPoints`: Retrieves transactions for a specific customer within a date range, calculates monthly and total reward points, and returns the result.
+  - `calculateAllCustomersPoints`: Retrieves transactions for all customers within a date range, calculates monthly and total reward points for each customer, and returns the result.
+
+### TransactionRepository
+The `TransactionRepository` interface extends `JpaRepository` and provides methods for accessing transaction data.
+
+- **Methods**:
+  - `findByCustomerIdAndDateBetween`: Retrieves transactions for a specific customer within a date range.
+  - `findByDateBetween`: Retrieves transactions within a date range.
+
+### Transaction
+The `Transaction` class defines the data model for transactions.
+
+- **Fields**:
+  - `id`: The unique identifier for the transaction.
+  - `customerId`: The ID of the customer associated with the transaction.
+  - `amount`: The transaction amount.
+  - `date`: The date of the transaction.
+
+### Testing
+The `RewardControllerTest` class contains unit tests for the `RewardController` using `MockMvc` to simulate HTTP requests and responses. It uses `Mockito` to mock the `RewardService` and verify the controller's behavior.
+
+## Getting Started
+### Prerequisites
+- Java 17 or higher
+- Maven
+
+### Running the Application
+1. Clone the repository:
+   git clone https://github.com/your-repo/reward-points-service.git
+2. Please ensure that the database is created using the rewards_db.sql file located in the db_dump folder.
+3. Navigate to the project directory:
+   cd reward-points-service
+4. Build the project:
+   mvn clean install
+5. Run the application:
+   mvn spring-boot:run
+6. Running Tests
+   To run the tests, use the following command:
+   mvn test
+   
+
+
+
+
