@@ -68,7 +68,7 @@ The `RewardControllerTest` class contains unit tests for the `RewardController` 
 
 ### Running the Application
 1. Clone the repository:
-   git clone https://github.com/your-repo/reward-points-service.git
+   git clone https://github.com/Anusha2196/reward-points-service.git
 2. Please ensure that the database is created using the rewards_db.sql file located in the db_dump folder.
 3. Navigate to the project directory:
    cd reward-points-service
