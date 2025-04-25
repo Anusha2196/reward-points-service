@@ -19,20 +19,15 @@ The `RewardController` class provides endpoints to get reward points for a speci
 
 - **Endpoints**:
   - `GET /rewards/points/{customerId}`: Retrieves reward points for a specific customer within a date range.
-  - `GET /rewards/allcustomers`: Retrieves reward points for all customers within a date range.
 
 - **Methods**:
   - `getRewardPoints`: Validates and adjusts the date range, calculates reward points for a specific customer, and returns the result.
-  - `calculateAllCustomersPoints`: Validates and adjusts the date range, calculates reward points for all customers, and returns the result.
-  - `validateAndAdjustDates`: Validates and adjusts the start and end dates to ensure they are within a 3-month range and that the start date is not after the end date.
 
 ### RewardService
 The `RewardService` interface defines methods for calculating reward points.
 
 - **Methods**:
-  - `calculatePoints`: Calculates reward points based on the transaction amount.
-  - `calculateMonthlyPoints`: Calculates monthly and total reward points for a specific customer within a date range.
-  - `calculateAllCustomersPoints`: Calculates monthly and total reward points for all customers within a date range.
+  - `getRewardPoints`: Validates and adjusts the date range, calculates reward points for a specific customer, and returns the result.
 
 ### RewardServiceImpl
 The `RewardServiceImpl` class implements the `RewardService` interface.
@@ -40,7 +35,8 @@ The `RewardServiceImpl` class implements the `RewardService` interface.
 - **Methods**:
   - `calculatePoints`: Calculates reward points based on the transaction amount. Customers receive 2 points for every dollar spent over $100 and 1 point for every dollar spent between $50 and $100.
   - `calculateMonthlyPoints`: Retrieves transactions for a specific customer within a date range, calculates monthly and total reward points, and returns the result.
-  - `calculateAllCustomersPoints`: Retrieves transactions for all customers within a date range, calculates monthly and total reward points for each customer, and returns the result.
+   - `validateAndAdjustDates`: Validates and adjusts the start and end dates to ensure they are within a 3-month range and that the start date is not after the end date.
+
 
 ### TransactionRepository
 The `TransactionRepository` interface extends `JpaRepository` and provides methods for accessing transaction data.
