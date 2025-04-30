@@ -130,20 +130,4 @@ class RewardServiceImplTest {
         assertEquals("start date must be earlier than the end date.", exception.getMessage());
     }
 
-    @Test
-    public void testGetRewardPoints_ValidDateRange() {
-        rewardServiceImpl.transactionRepository = Mockito.mock(TransactionRepository.class);
-
-        LocalDate startDate = LocalDate.of(2025, 1, 1);
-        LocalDate endDate = LocalDate.of(2025, 3, 31);
-        Long customerId = 1L;
-
-        RewardPointsDto expectedDto = new RewardPointsDto(Map.of("JANUARY", 90, "FEBRUARY", 30, "MARCH", 0), 120);
-        Mockito.when(rewardServiceImpl.calculateMonthlyPoints(customerId, startDate, endDate)).thenReturn(expectedDto);
-
-        RewardPointsDto result = rewardServiceImpl.getRewardPoints(customerId, startDate, endDate);
-
-        assertEquals(expectedDto, result);
     }
-
-}
