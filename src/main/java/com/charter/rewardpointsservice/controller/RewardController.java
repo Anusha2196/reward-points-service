@@ -38,23 +38,24 @@ public class RewardController {
      * @param endDate    the end date of the range (optional)
      * @return a ResponseEntity containing the reward points or an error message
      */
-    @GetMapping("/points/{customerId}")
-    public ResponseEntity<ResponseDto> getRewardPoints(@PathVariable Long customerId,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-    	ResponseDto responseDto = new ResponseDto();
-    	
-        try {
-        	
-            RewardPointsDto points = rewardService.getRewardPoints(customerId, startDate, endDate);
-            log.info("points"+points);
-            responseDto.setRewardPointsDto(points);
-            responseDto.setStatus("success");    
-        } catch (Exception e) {
-        	responseDto.setStatus("failed");
-            responseDto.setError(e.getMessage());
-        }
-        
-        return ResponseEntity.ok(responseDto);
-    }
+	@GetMapping("/points/{customerId}")
+	public ResponseEntity<ResponseDto> getRewardPoints(@PathVariable Long customerId,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+		ResponseDto responseDto = new ResponseDto();
+
+		try {
+
+			RewardPointsDto points = rewardService.getRewardPoints(customerId, startDate, endDate);
+
+			responseDto.setRewardPointsDto(points);
+			responseDto.setStatus("success");
+
+		} catch (Exception e) {
+			responseDto.setStatus("failed");
+			responseDto.setError(e.getMessage());
+		}
+
+		return ResponseEntity.ok(responseDto);
+	}
 }
