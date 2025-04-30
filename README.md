@@ -4,6 +4,11 @@
 The Reward Points Service is a Spring Boot application that calculates reward points for customers based on their transactions. Customers earn points for every dollar spent over $50, with additional points for amounts over $100. The service provides endpoints to retrieve reward points for individual customers as well as all customers within a specified date range.
 
 ## Project Structure
+It looks like the formatting of your project structure in the `README.md` file got altered. To ensure it displays correctly, you can use Markdown code blocks to preserve the structure. Here's how you can format it:
+
+```markdown
+# Project Structure
+
 reward-points-service
 │
 ├── src
@@ -33,7 +38,7 @@ reward-points-service
 │   ├── templates
 │
 ├── pom.xml
-
+```
 
 The project is organized into the following packages:
 
