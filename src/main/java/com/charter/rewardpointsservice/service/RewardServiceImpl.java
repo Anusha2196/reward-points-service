@@ -1,4 +1,4 @@
-package com.charter.rewardpointsservice.serviceImpl;
+package com.charter.rewardpointsservice.service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.charter.rewardpointsservice.dao.TransactionRepository;
 import com.charter.rewardpointsservice.dto.RewardPointsDto;
 import com.charter.rewardpointsservice.model.Transaction;
-import com.charter.rewardpointsservice.service.RewardService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,8 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RewardServiceImpl implements RewardService {
 
-	@Autowired
-	private TransactionRepository transactionRepository;
+	@Autowired 
+	TransactionRepository transactionRepository;
 
 
 	/**
@@ -72,6 +71,7 @@ public class RewardServiceImpl implements RewardService {
 			monthlyPoints.put(month, monthlyPoints.getOrDefault(month, 0) + points);
 			totalPoints += points;
 		}
+		log.info("from service"+totalPoints);
 		return new RewardPointsDto(monthlyPoints, totalPoints);
 	}
 
@@ -107,36 +107,41 @@ public class RewardServiceImpl implements RewardService {
 	 * @return a map containing the adjusted start and end dates, or an error
 	 *         message if the range is invalid
 	 */
-	private Map<String, Object> validateAndAdjustDates(LocalDate startDate, LocalDate endDate) {
-		if (startDate == null && endDate == null) {
-			endDate = LocalDate.now();
-			startDate = endDate.minusMonths(3);
-		} else if (startDate != null && endDate == null) {
-			endDate = startDate.plusMonths(3);
-		} else if (startDate == null && endDate != null) {
-			startDate = endDate.minusMonths(3);
-		}
+	public Map<String, Object> validateAndAdjustDates(LocalDate startDate, LocalDate endDate) {
+	    if (startDate == null && endDate == null) {
+	        endDate = LocalDate.now();
+	        startDate = endDate.minusMonths(3);
+	    } else if (startDate != null && endDate == null) {
+	        endDate = startDate.plusMonths(3);
+	        log.info("start date not null scenario startDate:" + startDate);
+		    log.info("start date not null scenario endDate:" + endDate);
+	        if ( endDate.isAfter(LocalDate.now())) {
+	        	return Map.of("error", "Start date should be set to two months prior to the current month.");
+	        }
+	    } else if (startDate == null && endDate != null) {
+	        startDate = endDate.minusMonths(3);
+	    }
 
-		log.info("startDate:" + startDate);
-		log.info("endDate:" + endDate);
+	    log.info("startDate:" + startDate);
+	    log.info("endDate:" + endDate);
 
-		if (startDate.isAfter(endDate)) {
-			return Map.of("error", "start date must be earlier than the end date.");
-		}
+	    if (startDate.isAfter(endDate)) {
+	        return Map.of("error", "Start date must be earlier than the end date.");
+	    }
 
-		long monthsBetween = ChronoUnit.MONTHS.between(startDate, endDate);
-		LocalDate adjustedDate = startDate.plusMonths(monthsBetween);
-		long daysBetween = ChronoUnit.DAYS.between(adjustedDate, endDate);
+	    long monthsBetween = ChronoUnit.MONTHS.between(startDate, endDate);
+	    LocalDate adjustedDate = startDate.plusMonths(monthsBetween);
+	    long daysBetween = ChronoUnit.DAYS.between(adjustedDate, endDate);
 
-		log.info("Months between " + startDate + " and " + endDate + ": " + monthsBetween);
-		log.info("Extra days between " + adjustedDate + " and " + endDate + ": " + daysBetween);
-		log.info("days difference:" + ChronoUnit.DAYS.between(startDate, endDate));
-		log.info("months difference:" + ChronoUnit.MONTHS.between(startDate, endDate));
+	    log.info("Months between " + startDate + " and " + endDate + ": " + monthsBetween);
+	    log.info("Extra days between " + adjustedDate + " and " + endDate + ": " + daysBetween);
+	    log.info("Days difference: " + ChronoUnit.DAYS.between(startDate, endDate));
+	    log.info("Months difference: " + ChronoUnit.MONTHS.between(startDate, endDate));
 
-		if (ChronoUnit.MONTHS.between(startDate, endDate) >= 3 && daysBetween > 0) {
-			return Map.of("error", "Date range should not exceed three months.");
-		}
+	    if (ChronoUnit.MONTHS.between(startDate, endDate) >= 3 && daysBetween > 0) {
+	        return Map.of("error", "Date range should not exceed three months.");
+	    }
 
-		return Map.of("startDate", startDate, "endDate", endDate);
+	    return Map.of("startDate", startDate, "endDate", endDate);
 	}
 }

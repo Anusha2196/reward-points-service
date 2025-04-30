@@ -33,6 +33,8 @@ reward-points-service
 │   ├── templates
 │
 ├── pom.xml
+
+
 The project is organized into the following packages:
 
 - **controller**: Contains the REST controllers that handle HTTP requests and responses.
@@ -90,6 +92,7 @@ The `RewardControllerTest` class contains unit tests for the `RewardController` 
 ### Prerequisites
 - Java 17 or higher
 - Maven
+- Spring Boot
 
 ### Running the Application
 1. Clone the repository:
