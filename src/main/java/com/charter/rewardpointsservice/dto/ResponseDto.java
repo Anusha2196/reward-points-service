@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ResponseDto {
 
-	private String status = "success";
+	private String status;
 	private String error;
 	private RewardPointsDto rewardPointsDto;
 }

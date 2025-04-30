@@ -4,6 +4,35 @@
 The Reward Points Service is a Spring Boot application that calculates reward points for customers based on their transactions. Customers earn points for every dollar spent over $50, with additional points for amounts over $100. The service provides endpoints to retrieve reward points for individual customers as well as all customers within a specified date range.
 
 ## Project Structure
+reward-points-service
+│
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com.charter.rewardpointsservice
+│   │   │       ├── RewardPointsServiceApplication.java
+│   │   │       ├── controller
+│   │   │       │    └── RewardController.java
+│   │   │       ├── dao
+│   │   │       │    └── TransactionRepository.java
+│   │   │       ├── dto
+│   │   │       │    └── Customer.java
+│   │   │       ├── service
+│   │   │       │    ├── RewardPointsService.java
+│   │   │       │    └── RewardServiceImpl.java
+│   ├── resources
+│   │   └── application.properties
+│   ├── test
+│   │   ├── java
+│   │   │   └── com.charter.rewardpointsservice
+│   │   │       ├── controller
+│   │   │       │    └── RewardControllerTest.java
+│   │   │       ├── service
+│   │   │       │    └── RewardServiceImplTest.java
+│   ├── static
+│   ├── templates
+│
+├── pom.xml
 The project is organized into the following packages:
 
 - **controller**: Contains the REST controllers that handle HTTP requests and responses.

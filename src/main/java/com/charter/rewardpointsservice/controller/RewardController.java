@@ -43,11 +43,13 @@ public class RewardController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
     	ResponseDto responseDto = new ResponseDto();
+    	
         try {
         	
             RewardPointsDto points = rewardService.getRewardPoints(customerId, startDate, endDate);
+            log.info("points"+points);
             responseDto.setRewardPointsDto(points);
-            
+            responseDto.setStatus("success");    
         } catch (Exception e) {
         	responseDto.setStatus("failed");
             responseDto.setError(e.getMessage());

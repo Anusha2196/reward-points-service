@@ -11,5 +11,4 @@ import com.charter.rewardpointsservice.model.Transaction;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 	public List<Transaction> findByCustomerIdAndDateBetween(Long customerId, LocalDate startDate, LocalDate endDate);
-	public List<Transaction> findByDateBetween(LocalDate startDate, LocalDate endDate);
 }
